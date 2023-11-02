@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"net/http"
 	"github.com/gorilla/mux"
 	"github.com/p4ndabk/ibge-integration/ibge"
+	"log"
+	"net/http"
 )
 
 func main() {
