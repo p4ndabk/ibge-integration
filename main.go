@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gorilla/mux"
-	"github.com/p4ndabk/ibge-integration/ibge"
+	"github.com/p4ndabk/ibge-integration/internal/ibge"
 	"log"
 	"net/http"
 )

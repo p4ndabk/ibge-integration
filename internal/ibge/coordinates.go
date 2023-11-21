@@ -26,7 +26,7 @@ func CheckCoordinates(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("not Cache: ", ibegeCode)
 
-	body, err := getCoordinatesIBGE(ibegeCode)
+	body, err := GetCoordinatesIBGE(ibegeCode)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -39,14 +39,14 @@ func CheckCoordinates(w http.ResponseWriter, r *http.Request) {
 	w.Write(body)
 }
 
-func getCoordinatesIBGE(ibgeCode string) ([]byte, error) {
+func GetCoordinatesIBGE(ibgeCode string) ([]byte, error) {
 	url := "https://servicodados.ibge.gov.br/api/v3/malhas/municipios/" + ibgeCode + "?formato=application/vnd.geo+json"
 
 	response, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
-	
+
 	defer response.Body.Close()
 
 	body, err := ioutil.ReadAll(response.Body)
