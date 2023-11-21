@@ -14,6 +14,9 @@ func main() {
 	router.HandleFunc("/api/health", HealthCheckHandler).Methods("GET")
 	router.HandleFunc("/api/city/coordinates/{ibge_code}", ibge.CheckCoordinates).Methods("GET")
 
+	router.HandleFunc("/api/city", ibge.CityList).Methods("GET")
+	router.HandleFunc("/api/city/{city_id}", ibge.CityById).Methods("GET")
+
 	fmt.Println("Server is running on port 4001")
 	log.Fatal(http.ListenAndServe(":4001", router))
 }

@@ -13,4 +13,4 @@ func TestGetCoordinatesIBGE(t *testing.T) {
 	fmt.Println(coordinates)
 	assert.Nil(t, err)
 	assert.NotNil(t, coordinates)
-} 
+}
