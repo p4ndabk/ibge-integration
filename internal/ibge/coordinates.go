@@ -13,7 +13,7 @@ type ResponseCoordinates struct {
 
 var cache = make(map[string][]byte)
 
-func CheckCoordinates(w http.ResponseWriter, r *http.Request) {
+func CheckCoordinateRequest(w http.ResponseWriter, r *http.Request) {
 	ibegeCode := mux.Vars(r)["ibge_code"]
 
 	if data, ok := cache[ibegeCode]; ok {

@@ -1,8 +1,8 @@
 package ibge
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestGetCoordinatesIBGE(t *testing.T) {
