@@ -82,6 +82,7 @@ func CityByIBGE(cityId int) (City, error) {
 	for _, c := range cityData.Cities {
 		if c.CodeIBGE == cityId {
 			city = c
+			break
 		}
 	}
 

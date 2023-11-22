@@ -3,11 +3,10 @@ package ibge
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"net/http"
 	"os"
 	"strconv"
-
-	"github.com/gorilla/mux"
 )
 
 type SolarEfficiencie struct {
@@ -55,7 +54,7 @@ func SolarEfficiencieByCodeRequest(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	solarEfficiencie, erro := GetEfficiencieByIBGECode(cityId)
+	solarEfficiencie, erro := EfficiencieByIBGECode(cityId)
 	if erro != nil {
 		http.Error(w, erro.Error(), http.StatusInternalServerError)
 	}
@@ -68,12 +67,12 @@ func SolarEfficiencieByCodeRequest(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func GetEfficiencieByIBGECode(cityId int) (SolarEfficiencie, error) {
-	var erro error
+func EfficiencieByIBGECode(cityId int) (SolarEfficiencie, error) {
+	var err error
 	s := SolarEfficiencies{}
-	s, erro = s.GetSolarEfficiencies()
-	if erro != nil {
-		return SolarEfficiencie{}, erro
+	s, err = s.GetSolarEfficiencies()
+	if err != nil {
+		return SolarEfficiencie{}, err
 	}
 
 	city, err := CityByIBGE(cityId)
@@ -86,14 +85,14 @@ func GetEfficiencieByIBGECode(cityId int) (SolarEfficiencie, error) {
 	var solarEfficiencie SolarEfficiencie
 
 	for _, s := range s.SolarEfficiencies {
-		if int(s.Latitude) >= int(city.Latitude) && s.Longitude >= city.Longitude { // substitua ID pelo campo que contém o código IBGE
+		if int(s.Latitude) >= int(city.Latitude) && s.Longitude >= city.Longitude {
 			solarEfficiencie = s
 			break
 		}
 	}
 
-	if solarEfficiencie.ID == 0 { // substitua ID pelo campo que contém o código IBGE
-		return SolarEfficiencie{}, erro
+	if solarEfficiencie.ID == 0 {
+		return SolarEfficiencie{}, err
 	}
 
 	return solarEfficiencie, nil
