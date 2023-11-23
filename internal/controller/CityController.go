@@ -51,3 +51,17 @@ func CityRequest(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
+
+func CheckCoordinateRequest(w http.ResponseWriter, r *http.Request) {
+	ibegeCode := mux.Vars(r)["ibge_code"]
+
+	body, err := ibge.GetCoordinatesIBGE(ibegeCode)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(body)
+}

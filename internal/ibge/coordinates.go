@@ -1,9 +1,7 @@
 package ibge
 
 import (
-	"fmt"
-	"github.com/gorilla/mux"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -13,33 +11,11 @@ type ResponseCoordinates struct {
 
 var cache = make(map[string][]byte)
 
-func CheckCoordinateRequest(w http.ResponseWriter, r *http.Request) {
-	ibegeCode := mux.Vars(r)["ibge_code"]
-
-	if data, ok := cache[ibegeCode]; ok {
-		w.Header().Set("Content-Type", "application/json")
-		fmt.Println("Cache: ", ibegeCode)
-		w.WriteHeader(http.StatusOK)
-		w.Write(data)
-		return
-	}
-
-	fmt.Println("not Cache: ", ibegeCode)
-
-	body, err := GetCoordinatesIBGE(ibegeCode)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
-	cache[ibegeCode] = body
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(body)
-}
-
 func GetCoordinatesIBGE(ibgeCode string) ([]byte, error) {
+	if data, ok := cache[ibgeCode]; ok {
+		return data, nil
+	}
+
 	url := "https://servicodados.ibge.gov.br/api/v3/malhas/municipios/" + ibgeCode + "?formato=application/vnd.geo+json"
 
 	response, err := http.Get(url)
@@ -49,10 +25,12 @@ func GetCoordinatesIBGE(ibgeCode string) ([]byte, error) {
 
 	defer response.Body.Close()
 
-	body, err := ioutil.ReadAll(response.Body)
+	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
+
+	cache[ibgeCode] = body
 
 	return body, nil
 }
