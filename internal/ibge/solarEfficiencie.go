@@ -46,8 +46,8 @@ func (s SolarEfficiencies) GetSolarEfficiencies() (SolarEfficiencies, error) {
 
 func EfficiencieByIBGECode(cityId int) (SolarEfficiencie, error) {
 	var err error
-	solarEfficiencies := SolarEfficiencies{}
 	var solarEfficiencie SolarEfficiencie
+	solarEfficiencies := SolarEfficiencies{}
 
 	solarEfficiencies, err = solarEfficiencies.GetSolarEfficiencies()
 	if err != nil {

@@ -11,7 +11,7 @@ import (
 func main() {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/api/health", HealthCheckHandlerRequest).Methods("GET")
+	router.HandleFunc("/api/health", controller.HealthCheckHandlerRequest).Methods("GET")
 	router.HandleFunc("/api/city/coordinates/{ibge_code}", controller.CheckCoordinateRequest).Methods("GET")
 
 	router.HandleFunc("/api/city", controller.AllCityRequest).Methods("GET")
@@ -21,9 +21,4 @@ func main() {
 
 	fmt.Println("Server is running on port 4001")
 	log.Fatal(http.ListenAndServe(":4001", router))
-}
-
-func HealthCheckHandlerRequest(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("OK"))
 }
