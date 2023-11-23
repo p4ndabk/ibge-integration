@@ -20,7 +20,6 @@ func SolarEfficiencieByCodeRequest(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "application/json")
 	err = json.NewEncoder(w).Encode(solarEfficiencie)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

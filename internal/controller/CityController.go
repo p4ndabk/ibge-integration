@@ -11,8 +11,6 @@ import (
 
 func AllCityRequest(w http.ResponseWriter, r *http.Request) {
 	var cityData ibge.Cities
-	
-	w.Header().Set("Content-Type", "application/json")
 
 	jsonData, err := os.Open("storage/cities.json")
 	if err != nil {
@@ -45,8 +43,6 @@ func CityRequest(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "application/json")
-
 	err = json.NewEncoder(w).Encode(city)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -62,7 +58,6 @@ func CheckCoordinateRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(body)
 }
