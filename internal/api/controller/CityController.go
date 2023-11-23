@@ -4,21 +4,15 @@ import (
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"github.com/p4ndabk/ibge-integration/internal/ibge"
+	"github.com/p4ndabk/ibge-integration/internal/helper"
 	"net/http"
-	"os"
-	"strconv"
 )
 
 func AllCityRequest(w http.ResponseWriter, r *http.Request) {
 	var cityData ibge.Cities
 
-	jsonData, err := os.Open("storage/cities.json")
+	cityData, err := ibge.AllCiteis()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-
-	decoder := json.NewDecoder(jsonData)
-	if err := decoder.Decode(&cityData); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
@@ -27,12 +21,10 @@ func AllCityRequest(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-
-	defer jsonData.Close()
 }
 
 func CityRequest(w http.ResponseWriter, r *http.Request) {
-	cityId, err := strconv.Atoi(mux.Vars(r)["city_id"])
+	cityId, err := helper.StringToInt(mux.Vars(r)["city_id"])
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

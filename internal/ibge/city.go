@@ -19,7 +19,7 @@ type Cities struct {
 }
 
 func CityByIBGE(cityId int) (City, error) {
-	var cityData Cities
+	var cities Cities
 	var city City
 
 	jsonData, err := os.Open("storage/cities.json")
@@ -28,11 +28,11 @@ func CityByIBGE(cityId int) (City, error) {
 	}
 
 	decoder := json.NewDecoder(jsonData)
-	if err := decoder.Decode(&cityData); err != nil {
+	if err := decoder.Decode(&cities); err != nil {
 		return City{}, err
 	}
 
-	for _, c := range cityData.Cities {
+	for _, c := range cities.Cities {
 		if c.CodeIBGE == cityId {
 			city = c
 			break
@@ -40,4 +40,22 @@ func CityByIBGE(cityId int) (City, error) {
 	}
 
 	return city, nil
+}
+
+func AllCiteis() (Cities, error) {
+	var cities Cities
+
+	jsonData, err := os.Open("storage/cities.json")
+	if err != nil {
+		return Cities{}, err
+	}
+
+	decoder := json.NewDecoder(jsonData)
+	if err := decoder.Decode(&cities); err != nil {
+		return Cities{}, err
+	}
+
+	defer jsonData.Close()
+
+	return cities, nil
 }
