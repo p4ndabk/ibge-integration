@@ -19,18 +19,18 @@ type Cities struct {
 }
 
 func CityByIBGE(cityId int) (City, error) {
+	var cityData Cities
+	var city City
+
 	jsonData, err := os.Open("storage/cities.json")
 	if err != nil {
 		return City{}, err
 	}
 
-	var cityData Cities
 	decoder := json.NewDecoder(jsonData)
 	if err := decoder.Decode(&cityData); err != nil {
 		return City{}, err
 	}
-
-	var city City
 
 	for _, c := range cityData.Cities {
 		if c.CodeIBGE == cityId {

@@ -10,6 +10,8 @@ import (
 )
 
 func AllCityRequest(w http.ResponseWriter, r *http.Request) {
+	var cityData ibge.Cities
+	
 	w.Header().Set("Content-Type", "application/json")
 
 	jsonData, err := os.Open("storage/cities.json")
@@ -17,7 +19,6 @@ func AllCityRequest(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	var cityData ibge.Cities
 	decoder := json.NewDecoder(jsonData)
 	if err := decoder.Decode(&cityData); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

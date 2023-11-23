@@ -46,8 +46,10 @@ func (s SolarEfficiencies) GetSolarEfficiencies() (SolarEfficiencies, error) {
 
 func EfficiencieByIBGECode(cityId int) (SolarEfficiencie, error) {
 	var err error
-	s := SolarEfficiencies{}
-	s, err = s.GetSolarEfficiencies()
+	solarEfficiencies := SolarEfficiencies{}
+	var solarEfficiencie SolarEfficiencie
+
+	solarEfficiencies, err = solarEfficiencies.GetSolarEfficiencies()
 	if err != nil {
 		return SolarEfficiencie{}, err
 	}
@@ -57,9 +59,7 @@ func EfficiencieByIBGECode(cityId int) (SolarEfficiencie, error) {
 		return SolarEfficiencie{}, err
 	}
 
-	var solarEfficiencie SolarEfficiencie
-
-	for _, s := range s.SolarEfficiencies {
+	for _, s := range solarEfficiencies.SolarEfficiencies {
 		if int(s.Latitude) >= int(city.Latitude) && s.Longitude >= city.Longitude {
 			solarEfficiencie = s
 			break
