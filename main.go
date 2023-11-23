@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gorilla/mux"
+	"github.com/p4ndabk/ibge-integration/internal/controller"
 	"github.com/p4ndabk/ibge-integration/internal/ibge"
 	"log"
 	"net/http"
@@ -14,8 +15,8 @@ func main() {
 	router.HandleFunc("/api/health", HealthCheckHandlerRequest).Methods("GET")
 	router.HandleFunc("/api/city/coordinates/{ibge_code}", ibge.CheckCoordinateRequest).Methods("GET")
 
-	router.HandleFunc("/api/city", ibge.CityIndexRequest).Methods("GET")
-	router.HandleFunc("/api/city/{city_id}", ibge.CityShowRequest).Methods("GET")
+	router.HandleFunc("/api/city", controller.AllCityRequest).Methods("GET")
+	router.HandleFunc("/api/city/{city_id}", controller.CityRequest).Methods("GET")
 
 	router.HandleFunc("/api/solar_efficiencie/{city_id}", ibge.SolarEfficiencieByCodeRequest).Methods("GET")
 

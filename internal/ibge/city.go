@@ -2,11 +2,7 @@ package ibge
 
 import (
 	"encoding/json"
-	"github.com/gorilla/mux"
-	"log"
-	"net/http"
 	"os"
-	"strconv"
 )
 
 type City struct {
@@ -20,49 +16,6 @@ type City struct {
 
 type Cities struct {
 	Cities []City `json:"cities"`
-}
-
-func CityIndexRequest(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	jsonData, err := os.Open("storage/cities.json")
-	if err != nil {
-		log.Println("error open file cities.json")
-	}
-
-	var cityData Cities
-	decoder := json.NewDecoder(jsonData)
-	if err := decoder.Decode(&cityData); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-
-	w.WriteHeader(http.StatusOK)
-	err = json.NewEncoder(w).Encode(cityData)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-
-	defer jsonData.Close()
-}
-
-func CityShowRequest(w http.ResponseWriter, r *http.Request) {
-	cityId, err := strconv.Atoi(mux.Vars(r)["city_id"])
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-
-	city, err := CityByIBGE(cityId)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-
-	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "application/json")
-
-	err = json.NewEncoder(w).Encode(city)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
 }
 
 func CityByIBGE(cityId int) (City, error) {
