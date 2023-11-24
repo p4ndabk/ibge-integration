@@ -3,8 +3,8 @@ package route
 import (
 	"net/http"
 	"github.com/gorilla/mux"
-	"github.com/p4ndabk/ibge-integration/internal/api/controller"
-	"github.com/p4ndabk/ibge-integration/internal/api/middleware"
+	"github.com/p4ndabk/ibge-integration/app/api/controller"
+	"github.com/p4ndabk/ibge-integration/app/api/middleware"
 )
 
 func InitRouter () (*mux.Router){
