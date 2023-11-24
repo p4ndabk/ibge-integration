@@ -9,8 +9,6 @@ import (
 )
 
 func StartApplication() {
-	router := route.InitRouter()
-
 	err := InitConfig()
 	if err != nil {
 		log.Fatal(err)
@@ -18,5 +16,5 @@ func StartApplication() {
 
 	port := Env.ApiRestPort
 	fmt.Println("Server is running on port ", port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", Env.ApiRestPort), router))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), route.InitRouter()))
 }
