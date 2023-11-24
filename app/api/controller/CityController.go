@@ -2,10 +2,11 @@ package controller
 
 import (
 	"encoding/json"
-	"github.com/gorilla/mux"
-	"github.com/p4ndabk/ibge-integration/internal/ibge"
-	"github.com/p4ndabk/ibge-integration/internal/helper"
 	"net/http"
+
+	"github.com/gorilla/mux"
+	"github.com/p4ndabk/ibge-integration/app/helper"
+	"github.com/p4ndabk/ibge-integration/app/ibge"
 )
 
 func AllCityRequest(w http.ResponseWriter, r *http.Request) {

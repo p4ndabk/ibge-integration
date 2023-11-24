@@ -2,10 +2,11 @@ package controller
 
 import (
 	"encoding/json"
-	"github.com/gorilla/mux"
-	"github.com/p4ndabk/ibge-integration/internal/ibge"
 	"net/http"
 	"strconv"
+
+	"github.com/gorilla/mux"
+	"github.com/p4ndabk/ibge-integration/app/ibge"
 )
 
 func SolarEfficiencieByCodeRequest(w http.ResponseWriter, r *http.Request) {
