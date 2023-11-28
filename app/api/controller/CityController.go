@@ -3,6 +3,8 @@ package controller
 import (
 	"encoding/json"
 	"net/http"
+	_ "github.com/mattn/go-sqlite3"
+
 
 	"github.com/gorilla/mux"
 	"github.com/p4ndabk/ibge-integration/app/helper"
@@ -30,7 +32,7 @@ func CityRequest(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	city, err := ibge.CityByIBGE(cityId)
+	city, err := ibge.CityByID(cityId)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
