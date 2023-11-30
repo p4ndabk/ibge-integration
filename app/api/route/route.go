@@ -11,7 +11,7 @@ func InitRouter () (*mux.Router){
 	router := mux.NewRouter()
 
 	router.Handle("/api/health", middleware.SetContentTypeMiddleware(http.HandlerFunc(controller.HealthCheckHandlerRequest))).Methods("GET")
-	router.HandleFunc("/api/city/coordinates/{ibge_code}", controller.CheckCoordinateRequest).Methods("GET")
+	router.Handle("/api/city/coordinates/{ibge_code}", middleware.SetContentTypeMiddleware(http.HandlerFunc(controller.CheckCoordinateRequest))).Methods("GET")
 
 	router.Handle("/api/city", middleware.SetContentTypeMiddleware(http.HandlerFunc(controller.AllCityRequest))).Methods("GET")
 	router.Handle("/api/city/{city_id}", middleware.SetContentTypeMiddleware(http.HandlerFunc(controller.CityRequest))).Methods("GET")

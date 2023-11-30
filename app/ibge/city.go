@@ -1,8 +1,7 @@
 package ibge
 
 import (
-	"encoding/json"
-	"os"
+	"github.com/p4ndabk/ibge-integration/infra/database"
 )
 
 type City struct {
@@ -18,25 +17,17 @@ type Cities struct {
 	Cities []City `json:"cities"`
 }
 
-func CityByIBGE(cityId int) (City, error) {
-	var cities Cities
+func CityByID(id int) (City, error) {
 	var city City
-
-	jsonData, err := os.Open("storage/cities.json")
+	
+	db, err := database.InitDB()
 	if err != nil {
 		return City{}, err
 	}
 
-	decoder := json.NewDecoder(jsonData)
-	if err := decoder.Decode(&cities); err != nil {
+	err = db.QueryRow("SELECT * FROM cities WHERE code_ibge = ?", id).Scan(&city.CodeIBGE, &city.CodeUF, &city.Name, &city.Latitude, &city.Longitude, &city.Capital)
+	if err != nil {
 		return City{}, err
-	}
-
-	for _, c := range cities.Cities {
-		if c.CodeIBGE == cityId {
-			city = c
-			break
-		}
 	}
 
 	return city, nil
@@ -45,17 +36,23 @@ func CityByIBGE(cityId int) (City, error) {
 func AllCiteis() (Cities, error) {
 	var cities Cities
 
-	jsonData, err := os.Open("storage/cities.json")
+	rows, err := database.Query("select * from cities;")
 	if err != nil {
 		return Cities{}, err
 	}
 
-	decoder := json.NewDecoder(jsonData)
-	if err := decoder.Decode(&cities); err != nil {
-		return Cities{}, err
+	for rows.Next() {
+		var city City
+		err = rows.Scan(&city.CodeIBGE, &city.CodeUF, &city.Name, &city.Latitude, &city.Longitude, &city.Capital)
+		if err != nil {
+			return Cities{}, err
+		}
+		cities.AddCity(city)
 	}
-
-	defer jsonData.Close()
 
 	return cities, nil
 }
+
+func (c *Cities) AddCity(city City) {
+	c.Cities = append(c.Cities, city)
+ }
