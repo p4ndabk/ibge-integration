@@ -54,7 +54,7 @@ func EfficiencieByIBGECode(cityId int) (SolarEfficiencie, error) {
 		return SolarEfficiencie{}, err
 	}
 
-	city, err := CityByID(cityId)
+	city, err := CityByIBGE(cityId)
 	if err != nil {
 		return SolarEfficiencie{}, err
 	}

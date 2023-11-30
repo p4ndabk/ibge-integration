@@ -32,7 +32,7 @@ func CityRequest(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	city, err := ibge.CityByID(cityId)
+	city, err := ibge.CityByIBGE(cityId)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
