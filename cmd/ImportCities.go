@@ -73,6 +73,7 @@ func ImportCities() (bool, error) {
 	fmt.Println("Total of cities imported: ", i)
 
 	tx.Commit()
+	database.CloseDB(db)
 	return true, nil
 }
 

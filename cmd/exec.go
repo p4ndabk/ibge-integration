@@ -65,7 +65,7 @@ func migrations() (bool, error) {
 }
 
 func inspire() {
-	motivationalQuotes := []string{
+	quotes := []string{
 		//motivational
 		"Believe in yourself and all that you are.",
 		"Success is the sum of small efforts repeated day in and day out.",
@@ -89,8 +89,8 @@ func inspire() {
 		"The only certainty in life is failure.",
 		"Why bother striving when the end result will be the same?",
 	}
-	randomIndex := rand.Intn(len(motivationalQuotes))
-	fmt.Println(motivationalQuotes[randomIndex])
+	randomIndex := rand.Intn(len(quotes))
+	fmt.Println(quotes[randomIndex])
 }
 
 func listCommands() {
