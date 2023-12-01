@@ -17,35 +17,35 @@ type Cities struct {
 	Cities []City `json:"cities"`
 }
 
-func CityByIBGE(id int) (City, error) {
-	var city City
+func CityByIBGE(id int) (*City, error) {
+	city := &City{}
 
 	db, err := database.InitDB()
 	if err != nil {
-		return City{}, err
+		return city, err
 	}
 
 	err = db.QueryRow("SELECT * FROM cities WHERE code_ibge = ?", id).Scan(&city.CodeIBGE, &city.CodeUF, &city.Name, &city.Latitude, &city.Longitude, &city.Capital)
 	if err != nil {
-		return City{}, err
+		return city, err
 	}
 
 	return city, nil
 }
 
-func AllCiteis() (Cities, error) {
-	var cities Cities
+func AllCiteis() (*Cities, error) {
+	cities := &Cities{}
 
 	rows, err := database.Query("select * from cities;")
 	if err != nil {
-		return Cities{}, err
+		return cities, err
 	}
 
 	for rows.Next() {
 		var city City
 		err = rows.Scan(&city.CodeIBGE, &city.CodeUF, &city.Name, &city.Latitude, &city.Longitude, &city.Capital)
 		if err != nil {
-			return Cities{}, err
+			return cities, err
 		}
 		cities.AddCity(city)
 	}

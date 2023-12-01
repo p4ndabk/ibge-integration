@@ -28,13 +28,13 @@ type SolarEfficiencies struct {
 	SolarEfficiencies []SolarEfficiencie `json:"solar_efficiencies"`
 }
 
-func EfficiencieByIBGECode(cityId int) (SolarEfficiencie, error) {
+func EfficiencieByIBGECode(cityId int) (*SolarEfficiencie, error) {
 	var err error
-	var solarEfficiencie SolarEfficiencie
+	solarEfficiencie := &SolarEfficiencie{}
 
 	city, err := CityByIBGE(cityId)
 	if err != nil {
-		return SolarEfficiencie{}, err
+		return solarEfficiencie, err
 	}
 
 	db, err := database.InitDB()

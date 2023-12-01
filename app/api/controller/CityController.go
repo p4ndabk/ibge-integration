@@ -11,7 +11,7 @@ import (
 )
 
 func AllCityRequest(w http.ResponseWriter, r *http.Request) {
-	var cityData ibge.Cities
+	cityData := &ibge.Cities{}
 
 	cityData, err := ibge.AllCiteis()
 	if err != nil {
