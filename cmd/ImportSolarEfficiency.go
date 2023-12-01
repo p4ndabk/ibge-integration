@@ -69,7 +69,7 @@ func ImportSolarEfficiency() (bool, error) {
 	}
 
 	i := 0
-	for _, solar := range solarEfficiencies.SolarEfficiencies{
+	for _, solar := range solarEfficiencies.SolarEfficiencies {
 
 		stmt, err := tx.Prepare("insert into solar_efficiencies(id, country, longitude, latitude, annual, january, february, march, april, may, june, july, august, september, october, november, december) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
 		if err != nil {
@@ -88,7 +88,6 @@ func ImportSolarEfficiency() (bool, error) {
 	database.CloseDB(db)
 	return true, nil
 }
-
 
 func getSolarEfficiencies() (ibge.SolarEfficiencies, error) {
 	var solarEfficiencies ibge.SolarEfficiencies

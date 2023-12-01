@@ -7,18 +7,18 @@ import (
 )
 
 type Command struct {
-	Inspire      string
-	ListCommands string
-	RunMigration string
-	ImportCities string
+	Inspire               string
+	ListCommands          string
+	RunMigration          string
+	ImportCities          string
 	ImportSolarEfficiency string
 }
 
 var Commands = Command{
-	Inspire:      "inspire",
-	ListCommands: "list:commands",
-	RunMigration: "run:migration",
-	ImportCities: "import:cities",
+	Inspire:               "inspire",
+	ListCommands:          "list:commands",
+	RunMigration:          "run:migration",
+	ImportCities:          "import:cities",
 	ImportSolarEfficiency: "import:solar:efficiency",
 }
 
