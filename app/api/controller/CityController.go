@@ -2,9 +2,8 @@ package controller
 
 import (
 	"encoding/json"
-	"net/http"
 	_ "github.com/mattn/go-sqlite3"
-
+	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/p4ndabk/ibge-integration/app/helper"

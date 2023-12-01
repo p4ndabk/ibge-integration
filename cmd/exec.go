@@ -7,15 +7,14 @@ import (
 )
 
 type Command struct {
-	Inspire string
+	Inspire      string
 	ListCommands string
 	RunMigration string
 	ImportCities string
-
 }
 
 var Commands = Command{
-	Inspire: "inspire",
+	Inspire:      "inspire",
 	ListCommands: "list:commands",
 	RunMigration: "run:migration",
 	ImportCities: "import:cities",
@@ -56,7 +55,6 @@ func runCommands() {
 	}
 }
 
-
 func migrations() (bool, error) {
 	_, err := CreateCitiesTable()
 	if err != nil {
@@ -65,7 +63,6 @@ func migrations() (bool, error) {
 
 	return true, nil
 }
-
 
 func inspire() {
 	motivationalQuotes := []string{
@@ -82,15 +79,15 @@ func inspire() {
 		"The secret of getting ahead is getting started.",
 		//desmotivational
 		"If something can go wrong, it will.",
-        "Success is temporary; failure is permanent.",
-        "Nothing is worthwhile, so why bother?",
-        "No matter how hard you try, you'll always fail.",
-        "The world is already full of disappointments, why bother trying harder?",
-        "Dreams are just unattainable illusions.",
-        "Life is a series of never-ending letdowns.",
-        "Never expect much from anything or anyone to avoid disappointment.",
-        "The only certainty in life is failure.",
-        "Why bother striving when the end result will be the same?",
+		"Success is temporary; failure is permanent.",
+		"Nothing is worthwhile, so why bother?",
+		"No matter how hard you try, you'll always fail.",
+		"The world is already full of disappointments, why bother trying harder?",
+		"Dreams are just unattainable illusions.",
+		"Life is a series of never-ending letdowns.",
+		"Never expect much from anything or anyone to avoid disappointment.",
+		"The only certainty in life is failure.",
+		"Why bother striving when the end result will be the same?",
 	}
 	randomIndex := rand.Intn(len(motivationalQuotes))
 	fmt.Println(motivationalQuotes[randomIndex])
@@ -103,4 +100,3 @@ func listCommands() {
 	fmt.Println("RunMigration:", Commands.RunMigration)
 	fmt.Println("ImportCities:", Commands.ImportCities)
 }
-

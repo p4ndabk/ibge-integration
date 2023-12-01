@@ -11,7 +11,7 @@ import (
 	"github.com/p4ndabk/ibge-integration/infra/database"
 )
 
-func CreateCitiesTable() (bool, error){
+func CreateCitiesTable() (bool, error) {
 	db, err := database.InitDB()
 	if err != nil {
 		log.Fatal(err)
@@ -37,7 +37,7 @@ func CreateCitiesTable() (bool, error){
 	return true, nil
 }
 
-func ImportCities() (bool, error){
+func ImportCities() (bool, error) {
 	db, err := database.InitDB()
 	if err != nil {
 		log.Fatal(err)
@@ -47,7 +47,7 @@ func ImportCities() (bool, error){
 	cities, err := importCitiesFile()
 	if err != nil {
 		log.Fatal(err)
-		return false, err		
+		return false, err
 	}
 
 	tx, err := db.Begin()
@@ -71,7 +71,7 @@ func ImportCities() (bool, error){
 	}
 
 	fmt.Println("Total of cities imported: ", i)
-	
+
 	tx.Commit()
 	return true, nil
 }
@@ -81,7 +81,7 @@ func importCitiesFile() (ibge.Cities, error) {
 
 	jsonData, err := os.Open("storage/cities.json")
 	if err != nil {
-		return cities, err		
+		return cities, err
 	}
 
 	decoder := json.NewDecoder(jsonData)

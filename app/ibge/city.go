@@ -19,7 +19,7 @@ type Cities struct {
 
 func CityByIBGE(id int) (City, error) {
 	var city City
-	
+
 	db, err := database.InitDB()
 	if err != nil {
 		return City{}, err
