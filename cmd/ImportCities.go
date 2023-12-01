@@ -18,7 +18,7 @@ func CreateCitiesTable() (bool, error) {
 		return false, err
 	}
 
-	createCitiesTable := `
+	script := `
 		CREATE TABLE IF NOT EXISTS cities (
 			code_ibge INTEGER,
 			code_uf INTEGER,
@@ -28,9 +28,9 @@ func CreateCitiesTable() (bool, error) {
 			capital INTEGER
 		);
 	`
-	_, err = db.Exec(createCitiesTable)
+	_, err = db.Exec(script)
 	if err != nil {
-		log.Printf("%q: %s\n", err, createCitiesTable)
+		log.Printf("%q: %s\n", err, script)
 		return false, err
 	}
 

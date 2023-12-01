@@ -1,8 +1,7 @@
 package ibge
 
 import (
-	"encoding/json"
-	"os"
+	"github.com/p4ndabk/ibge-integration/infra/database"
 )
 
 type SolarEfficiencie struct {
@@ -29,45 +28,32 @@ type SolarEfficiencies struct {
 	SolarEfficiencies []SolarEfficiencie `json:"solar_efficiencies"`
 }
 
-func (s SolarEfficiencies) GetSolarEfficiencies() (SolarEfficiencies, error) {
-	jsonData, err := os.Open("storage/solar_efficiencies.json")
-	if err != nil {
-		return SolarEfficiencies{}, err
-	}
-	var solarEfficienciesData SolarEfficiencies
-
-	decoder := json.NewDecoder(jsonData)
-	if err := decoder.Decode(&solarEfficienciesData); err != nil {
-		return SolarEfficiencies{}, err
-	}
-
-	return solarEfficienciesData, nil
-}
-
 func EfficiencieByIBGECode(cityId int) (SolarEfficiencie, error) {
 	var err error
 	var solarEfficiencie SolarEfficiencie
-	solarEfficiencies := SolarEfficiencies{}
-
-	solarEfficiencies, err = solarEfficiencies.GetSolarEfficiencies()
-	if err != nil {
-		return SolarEfficiencie{}, err
-	}
 
 	city, err := CityByIBGE(cityId)
 	if err != nil {
 		return SolarEfficiencie{}, err
 	}
 
-	for _, s := range solarEfficiencies.SolarEfficiencies {
-		if int(s.Latitude) >= int(city.Latitude) && s.Longitude >= city.Longitude {
-			solarEfficiencie = s
-			break
-		}
+	db, err := database.InitDB()
+	if err != nil {
+		return solarEfficiencie, err
 	}
-
-	if solarEfficiencie.ID == 0 {
-		return SolarEfficiencie{}, err
+	err = db.QueryRow("SELECT * FROM solar_efficiencies WHERE latitude >= ? AND longitude >= ?",
+		city.Latitude, city.Longitude).Scan(
+		&solarEfficiencie.ID, &solarEfficiencie.Country,
+		&solarEfficiencie.Longitude, &solarEfficiencie.Latitude,
+		&solarEfficiencie.Annual, &solarEfficiencie.January,
+		&solarEfficiencie.February, &solarEfficiencie.March,
+		&solarEfficiencie.April, &solarEfficiencie.May,
+		&solarEfficiencie.June, &solarEfficiencie.July,
+		&solarEfficiencie.August, &solarEfficiencie.September,
+		&solarEfficiencie.October, &solarEfficiencie.November,
+		&solarEfficiencie.December)
+	if err != nil {
+		return solarEfficiencie, err
 	}
 
 	return solarEfficiencie, nil

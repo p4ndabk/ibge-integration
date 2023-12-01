@@ -7,17 +7,19 @@ import (
 )
 
 type Command struct {
-	Inspire      string
-	ListCommands string
-	RunMigration string
-	ImportCities string
+	Inspire               string
+	ListCommands          string
+	RunMigration          string
+	ImportCities          string
+	ImportSolarEfficiency string
 }
 
 var Commands = Command{
-	Inspire:      "inspire",
-	ListCommands: "list:commands",
-	RunMigration: "run:migration",
-	ImportCities: "import:cities",
+	Inspire:               "inspire",
+	ListCommands:          "list:commands",
+	RunMigration:          "run:migration",
+	ImportCities:          "import:cities",
+	ImportSolarEfficiency: "import:solar:efficiency",
 }
 
 func InitExec() {
@@ -53,10 +55,24 @@ func runCommands() {
 		}
 		fmt.Println("Cities imported!")
 	}
+
+	if os.Args[1] == Commands.ImportSolarEfficiency {
+		fmt.Println("Importing solar efficiency...")
+		_, err := ImportSolarEfficiency()
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println("Solar efficiency imported!")
+	}
 }
 
 func migrations() (bool, error) {
 	_, err := CreateCitiesTable()
+	if err != nil {
+		return false, err
+	}
+
+	_, err = CreateSolarEfficiencyTable()
 	if err != nil {
 		return false, err
 	}
