@@ -1,13 +1,13 @@
 package route
 
 import (
-	"net/http"
 	"github.com/gorilla/mux"
 	"github.com/p4ndabk/ibge-integration/app/api/controller"
 	"github.com/p4ndabk/ibge-integration/app/api/middleware"
+	"net/http"
 )
 
-func InitRouter () (*mux.Router){
+func InitRouter() *mux.Router {
 	router := mux.NewRouter()
 
 	router.Handle("/api/health", middleware.SetContentTypeMiddleware(http.HandlerFunc(controller.HealthCheckHandlerRequest))).Methods("GET")

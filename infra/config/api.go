@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/p4ndabk/ibge-integration/app/api/route"
+	"github.com/p4ndabk/ibge-integration/cmd"
 )
 
 func StartApplication() {
@@ -13,6 +14,8 @@ func StartApplication() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	cmd.InitExec()
 
 	port := Env.ApiRestPort
 	fmt.Println("Server is running on port ", port)

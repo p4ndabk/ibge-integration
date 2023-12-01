@@ -8,7 +8,12 @@ func InitDB() (*sql.DB, error) {
 		return nil, err
 	}
 
+
 	return db, nil
+}
+
+func CloseDB(db *sql.DB) {
+	defer db.Close()
 }
 
 func Query(query string) (*sql.Rows, error) {

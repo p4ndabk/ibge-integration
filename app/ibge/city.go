@@ -17,9 +17,9 @@ type Cities struct {
 	Cities []City `json:"cities"`
 }
 
-func CityByID(id int) (City, error) {
+func CityByIBGE(id int) (City, error) {
 	var city City
-	
+
 	db, err := database.InitDB()
 	if err != nil {
 		return City{}, err
@@ -55,4 +55,4 @@ func AllCiteis() (Cities, error) {
 
 func (c *Cities) AddCity(city City) {
 	c.Cities = append(c.Cities, city)
- }
+}
