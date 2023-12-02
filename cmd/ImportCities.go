@@ -37,23 +37,21 @@ func CreateCitiesTable() (bool, error) {
 	return true, nil
 }
 
-func ImportCities() (bool, error) {
+func ImportCities() {
+	fmt.Println("Importing cities...")
 	db, err := database.InitDB()
 	if err != nil {
-		log.Fatal(err)
-		return false, err
+		panic(err)
 	}
 
 	cities, err := importCitiesFile()
 	if err != nil {
-		log.Fatal(err)
-		return false, err
+		panic(err)
 	}
 
 	tx, err := db.Begin()
 	if err != nil {
-		log.Fatal(err)
-		return false, err
+		panic(err)
 	}
 
 	i := 0
@@ -61,20 +59,18 @@ func ImportCities() (bool, error) {
 
 		stmt, err := tx.Prepare("insert into cities(code_ibge, code_uf, name, latitude, longitude, capital) values(?, ?, ?, ?, ?, ?)")
 		if err != nil {
-			return false, err
+			panic(err)
 		}
 		_, err = stmt.Exec(city.CodeIBGE, city.CodeUF, city.Name, city.Latitude, city.Longitude, city.Capital)
 		if err != nil {
-			return false, err
+			panic(err)
 		}
 		i++
 	}
-
-	fmt.Println("Total of cities imported: ", i)
-
 	tx.Commit()
 	database.CloseDB(db)
-	return true, nil
+	fmt.Println("Total of cities imported: ", i)
+	fmt.Println("Cities imported!")
 }
 
 func importCitiesFile() (ibge.Cities, error) {

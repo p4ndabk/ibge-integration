@@ -39,45 +39,30 @@ func runCommands() {
 	}
 
 	if os.Args[1] == Commands.RunMigration {
-		fmt.Println("Running migrations...")
-		_, err := migrations()
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println("Migrations finished!")
+		migrations()
 	}
 
 	if os.Args[1] == Commands.ImportCities {
-		fmt.Println("Importing cities...")
-		_, err := ImportCities()
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println("Cities imported!")
+		ImportCities()
 	}
 
 	if os.Args[1] == Commands.ImportSolarEfficiency {
-		fmt.Println("Importing solar efficiency...")
-		_, err := ImportSolarEfficiency()
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println("Solar efficiency imported!")
+		ImportSolarEfficiency()
 	}
 }
 
-func migrations() (bool, error) {
+func migrations() {
+	fmt.Println("Running migrations...")
 	_, err := CreateCitiesTable()
 	if err != nil {
-		return false, err
+		panic(err)
 	}
 
 	_, err = CreateSolarEfficiencyTable()
 	if err != nil {
-		return false, err
+		panic(err)
 	}
-
-	return true, nil
+	fmt.Println("Migrations finished!")
 }
 
 func inspire() {

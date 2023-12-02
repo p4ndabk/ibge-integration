@@ -49,23 +49,22 @@ func CreateSolarEfficiencyTable() (bool, error) {
 	return true, nil
 }
 
-func ImportSolarEfficiency() (bool, error) {
+func ImportSolarEfficiency() {
+	fmt.Println("Importing solar efficiency...")
+
 	db, err := database.InitDB()
 	if err != nil {
-		log.Fatal(err)
-		return false, err
+		panic(err)
 	}
 
 	solarEfficiencies, err := getSolarEfficiencies()
 	if err != nil {
-		log.Fatal(err)
-		return false, err
+		panic(err)
 	}
 
 	tx, err := db.Begin()
 	if err != nil {
-		log.Fatal(err)
-		return false, err
+		panic(err)
 	}
 
 	i := 0
@@ -73,20 +72,19 @@ func ImportSolarEfficiency() (bool, error) {
 
 		stmt, err := tx.Prepare("insert into solar_efficiencies(id, country, longitude, latitude, annual, january, february, march, april, may, june, july, august, september, october, november, december) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
 		if err != nil {
-			return false, err
+			panic(err)
 		}
 		_, err = stmt.Exec(solar.ID, solar.Country, solar.Longitude, solar.Latitude, solar.Annual, solar.January, solar.February, solar.March, solar.April, solar.May, solar.June, solar.July, solar.August, solar.September, solar.October, solar.November, solar.December)
 		if err != nil {
-			return false, err
+			panic(err)
 		}
 		i++
 	}
 
-	fmt.Println("Total of Solar efficiency imported: ", i)
-
 	tx.Commit()
 	database.CloseDB(db)
-	return true, nil
+	fmt.Println("Total of Solar efficiency imported: ", i)
+	fmt.Println("Solar efficiency imported!")
 }
 
 func getSolarEfficiencies() (ibge.SolarEfficiencies, error) {
