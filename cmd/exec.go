@@ -32,30 +32,24 @@ func InitExec() {
 }
 
 func runCommands() {
-	if os.Args[1] == Commands.Inspire {
+	switch os.Args[1] {
+	case Commands.Inspire:
 		inspire()
-	}
-
-	if os.Args[1] == Commands.ListCommands {
+	case Commands.ListCommands:
 		listCommands()
-	}
-
-	if os.Args[1] == Commands.RunMigration {
+	case Commands.RunMigration:
 		migrations()
-	}
-
-	if os.Args[1] == Commands.ImportCities {
+	case Commands.ImportCities:
 		ImportCities()
-	}
-
-	if os.Args[1] == Commands.ImportSolarEfficiency {
+	case Commands.ImportSolarEfficiency:
 		ImportSolarEfficiency()
-	}
-
-	if os.Args[1] == Commands.RunCron {
+	case Commands.RunCron:
 		InitCron()
+	default:
+		fmt.Println("Comando inválido")
 	}
 }
+
 
 func migrations() {
 	fmt.Println("Running migrations...")
