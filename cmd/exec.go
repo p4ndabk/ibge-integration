@@ -12,6 +12,7 @@ type Command struct {
 	RunMigration          string
 	ImportCities          string
 	ImportSolarEfficiency string
+	RunCron               string
 }
 
 var Commands = Command{
@@ -20,6 +21,7 @@ var Commands = Command{
 	RunMigration:          "run:migration",
 	ImportCities:          "import:cities",
 	ImportSolarEfficiency: "import:solar:efficiency",
+	RunCron:               "run:cron",
 }
 
 func InitExec() {
@@ -63,6 +65,11 @@ func runCommands() {
 			panic(err)
 		}
 		fmt.Println("Solar efficiency imported!")
+	}
+
+	if os.Args[1] == Commands.RunCron {
+		fmt.Println("Importing run cron...")
+		InitCron()
 	}
 }
 
@@ -115,4 +122,5 @@ func listCommands() {
 	fmt.Println("ListCommands:", Commands.ListCommands)
 	fmt.Println("RunMigration:", Commands.RunMigration)
 	fmt.Println("ImportCities:", Commands.ImportCities)
+	fmt.Println("Run cron:", Commands.RunCron)
 }

@@ -17,7 +17,8 @@ func StartApplication() {
 	}
 
 	cmd.InitExec()
-	InitCron()
+
+	cmd.InitCron()
 
 	port := Env.ApiRestPort
 	fmt.Println("Server is running on port ", port)
