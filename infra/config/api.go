@@ -11,13 +11,9 @@ import (
 )
 
 func StartApplication() {
-	err := InitConfig()
-	if err != nil {
-		log.Fatal(err)
-	}
+	InitConfig()
 
 	cmd.InitCommand()
-
 	cmd.InitCron(Env.EnableCron)
 
 	port := Env.ApiRestPort

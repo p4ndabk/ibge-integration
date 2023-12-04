@@ -18,11 +18,11 @@ var Env Config = Config{
 
 func InitConfig() error {
 	if err := godotenv.Load(); err != nil {
-		return err
+		panic(err)
 	}
 
 	if err := envconfig.Process("", &Env); err != nil {
-		return err
+		panic(err)
 	}
 
 	return nil
