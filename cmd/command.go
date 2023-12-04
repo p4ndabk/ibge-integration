@@ -24,7 +24,7 @@ var Commands = Command{
 	RunCron:               "run:cron",
 }
 
-func InitExec() {
+func InitCommand() {
 	if len(os.Args) > 1 {
 		runCommands()
 		os.Exit(0)
@@ -44,7 +44,7 @@ func runCommands() {
 	case Commands.ImportSolarEfficiency:
 		ImportSolarEfficiency()
 	case Commands.RunCron:
-		InitCron()
+		InitCron(true)
 	default:
 		fmt.Println("Comando inválido")
 	}

@@ -24,7 +24,12 @@ var entries = Entry{
   Minutely: "@minutely",
 }
 
-func InitCron() {
+func InitCron(enableCron bool) {
+  if !enableCron {
+    fmt.Println("cron is disabled")
+    return
+  }
+
   fmt.Println("initialize cron...")
   c := *cron.New()
 
@@ -35,7 +40,6 @@ func InitCron() {
 
   c.Start()
 
-  // Keep the program running to allow scheduled functionsto execute
   select {}
 }
 
